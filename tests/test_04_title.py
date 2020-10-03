@@ -23,7 +23,9 @@ class Test04TitleAPI:
             'Проверьте, что при POST запросе `/api/v1/titles/` с не правильными данными возвращает статус 400'
         data = {'name': 'Поворот туда', 'year': 2000, 'genre': [genres[0]['slug'], genres[1]['slug']],
                 'category': categories[0]['slug'], 'description': 'Крутое пике'}
+        print('data<<<<<<', data.get('genre'), type(data.get('genre')))
         response = user_client.post('/api/v1/titles/', data=data)
+        print('from base<<<<<<', response.json())
         assert response.status_code == 201, \
             'Проверьте, что при POST запросе `/api/v1/titles/` с правильными данными возвращает статус 201'
         data = {'name': 'Проект', 'year': 2020, 'genre': [genres[2]['slug']], 'category': categories[1]['slug'],
@@ -74,6 +76,8 @@ class Test04TitleAPI:
             'Проверьте, что при GET запросе `/api/v1/titles/` возвращаете данные с пагинацией. ' \
             'Значение параметра `results` неправильное, значение `category` неправильное ' \
             'или не сохранилось при POST запросе.'
+        #???????????????????моя ошибка????????????????????????????????????????????????????????????????????????????????????????????????????????
+        print('???????моя ошибка??????', genres[1], title)
         assert genres[0] in title.get('genre', []) and genres[1] in title.get('genre', []), \
             'Проверьте, что при GET запросе `/api/v1/titles/` возвращаете данные с пагинацией. ' \
             'Значение параметра `results` неправильное, значение `genre` неправильное ' \
@@ -119,9 +123,11 @@ class Test04TitleAPI:
             'Проверьте, что при GET запросе `/api/v1/titles/{title_id}/` ' \
             'без токена авторизации возвращается статус 200'
         data = response.json()
+        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', data)
         assert type(data.get('id')) == int, \
             'Проверьте, что при GET запросе `/api/v1/titles/{title_id}/` возвращаете данные объекта. ' \
             'Значение `id` нет или не является целым числом.'
+        # !!!!!!!!!!!!!!!!моя ошибка !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         assert data.get('category') == categories[0], \
             'Проверьте, что при GET запросе `/api/v1/titles/{title_id}/` возвращаете данные объекта. ' \
             'Значение `category` неправильное.'

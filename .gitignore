@@ -15,5 +15,5 @@ __pycache__/
 *.sublime-workspace
 
 media/
-
+data/csv_to_sql.py
 db.sqlite3

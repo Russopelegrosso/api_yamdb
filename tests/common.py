@@ -56,6 +56,8 @@ def create_genre(user_client):
     data = {'name': 'Драма', 'slug': 'drama'}
     result.append(data)
     user_client.post('/api/v1/genres/', data=data)
+    print('create_genre_result: ', result)
+    print('create_genre_from_base: ', user_client.get('/api/v1/genres/').json())
     return result
 
 
@@ -67,12 +69,18 @@ def create_titles(user_client):
             'category': categories[0]['slug'], 'description': 'Крутое пике'}
     response = user_client.post('/api/v1/titles/', data=data)
     data['id'] = response.json()['id']
+    # !!!!!! потом удалить!!!!
+    id = response.json()['id']
+    resp = user_client.get(f'/api/v1/titles/{id}/')
+    print('Данные из базы', resp.json())
+    #!!!!!!!!!!!!!!!!!!!!!!!!!
     result.append(data)
     data = {'name': 'Проект', 'year': 2020, 'genre': [genres[2]['slug']], 'category': categories[1]['slug'],
             'description': 'Главная драма года'}
     response = user_client.post('/api/v1/titles/', data=data)
     data['id'] = response.json()['id']
     result.append(data)
+    print('create_title&&&&&&&&&&&&&&&&&&&&&&&&&&&', result)
     return result, categories, genres
 
 
